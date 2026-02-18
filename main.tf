@@ -1,15 +1,18 @@
 terraform {
+     required_version = ">= 1.14.4"
+
 required_providers {
   azurerm = {
     source  = "hashicorp/azurerm"
     version = "~> 4.60.0"
   }
- required_version = ">= 1.14.4"
 }
 
 }
 provider "azurerm" {
-  features {}
+  features {
+
+  }
 }
 
 resource "azurerm_resource_group" "walmart" {
