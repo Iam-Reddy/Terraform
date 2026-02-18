@@ -21,7 +21,7 @@ resource "azurerm_resource_group" "walmart" {
 }
 
 resource "azurerm_storage_account" "walmart" {
-  name                     = "storageaccountname"
+  name                     = "walmartstorageaccount"
   resource_group_name      = azurerm_resource_group.walmart.name
   location                 = azurerm_resource_group.walmart.location
   account_tier             = "Standard"
