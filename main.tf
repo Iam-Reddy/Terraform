@@ -1,27 +1,34 @@
 terraform {
-     required_version = ">= 1.14.4"
+  required_version = ">= 1.4.0"
 
-required_providers {
-  azurerm = {
-    source  = "hashicorp/azurerm"
-    version = "~> 4.60.0"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.60.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
 }
 
-}
 provider "azurerm" {
-  features {
+  features {}
+}
 
-  }
+resource "random_integer" "rand" {
+  min = 10000
+  max = 99999
 }
 
 resource "azurerm_resource_group" "walmart" {
-  name     = "walmart-resources"
-  location = "east US"
+  name     = "walmart-tfstate"
+  location = "eastus"
 }
 
-resource "azurerm_storage_account" "walmart" {
-  name                     = "walmartstoragedatalake"
+resource "azurerm_storage_account" "walmarttfstate" {
+  name                     = "walmarttf${random_integer.rand.result}"
   resource_group_name      = azurerm_resource_group.walmart.name
   location                 = azurerm_resource_group.walmart.location
   account_tier             = "Standard"
@@ -31,3 +38,10 @@ resource "azurerm_storage_account" "walmart" {
     environment = "dev"
   }
 }
+
+resource "azurerm_storage_container" "tfstate" {
+  name               = "tfstate"
+  storage_account_id = azurerm_storage_account.walmarttfstate.id
+  container_access_type = "private"
+}
+
