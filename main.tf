@@ -14,7 +14,7 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "walmart-tfstate"
-    storage_account_name = "walmarttf54492"
+    storage_account_name = "walmarttfstate${random_integer.rand.result}"
     container_name       = "tfstate"
     key                  = "dev.terraform.tfstate"
   }
