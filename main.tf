@@ -12,7 +12,12 @@ terraform {
     }
   }
 
- 
+  backend "azurerm" {
+    resource_group_name  = "walmart-tfstate"
+    storage_account_name = "walmarttf54492"
+    container_name       = "tfstate"
+    key                  = "dev.terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
